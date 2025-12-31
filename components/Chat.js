@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import { encryptMessage, decryptMessage } from '../lib/crypto'
+import { decryptMessage, encryptMessage } from '../lib/crypto'
 
 export default function Chat({ session }) {
   const [messages, setMessages] = useState([])
@@ -18,7 +18,7 @@ export default function Chat({ session }) {
     fetchMessages();
   }, [isKeySet]) 
 
-  // 2. Realtime Subscription (The Fixed Version)
+  // 2. Realtime Subscription (Fixed for "Seen" status)
   useEffect(() => {
     const channel = supabase
       .channel('public:messages')
@@ -89,6 +89,7 @@ export default function Chat({ session }) {
 
   const scrollToBottom = () => bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
 
+  // Passphrase Screen
   if (!isKeySet) {
     return (
       <div className="flex h-screen items-center justify-center bg-black text-white">
@@ -107,6 +108,7 @@ export default function Chat({ session }) {
     );
   }
 
+  // Main Chat Screen
   return (
     <div className="flex flex-col h-screen bg-black text-gray-200 font-sans">
       {/* Header */}
