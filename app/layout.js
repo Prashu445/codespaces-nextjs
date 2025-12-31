@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'Secret Chat',
   description: 'E2EE Private Messaging',
+  manifest: '/manifest.json', // This tells the browser to look in the public folder
 }
 
 export const viewport = {
